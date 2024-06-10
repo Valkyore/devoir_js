@@ -1,25 +1,52 @@
-let form = document.querySelector('form');
+document.addEventListener("DOMContentLoaded", function() {
+  let form = document.querySelector('form');
 
-form.addEventListener("submit",(event) => {
-    event.preventDefault();
-})
+  // Écoute l'événement de soumission du formulaire et empêche le comportement par défaut (rechargement de la page)
+  form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      NewCom(); // Appel de la fonction NewCom
+  })});
 
 function NewCom(){
-    let form = document.querySelector("form")
     let ListeCommentaire = document.getElementById('comment-list');
-    let nouveauCommentaire = document.getElementById('nouveau-com');
+    let messageAlert = document.getElementById('error-message');
 
-    let nom = document.getElementById('last-name');
-    let prenom = document.getElementById('first-name');
-    let texte = document.getElementById('message');
-    console.log(nom.value,prenom.value,message.value);
+    let nom = document.getElementById('last-name').value.trim();
+    let prenom = document.getElementById('first-name').value.trim();
+    let texte = document.getElementById('message').value.trim();
+  
+  	if(nom === '', prenom ==='', texte === ''){
+        messageAlert.style.display ="block"
 
-    nom.prenom = document.createElement('h3');
-    texte = document.createElement('p');
+    }else {
 
-    nouveauCommentaire.appendChild(texte,nom.prenom);
+    let nouveauCommentaire = document.createElement('div');
+    nouveauCommentaire.className = 'flex space-x-4 text-sm text-gray-500';
 
-    ListeCommentaire.appendChild(nouveauCommentaire)
+    
+    let titreNomPrenom = document.createElement('div');
+    titreNomPrenom.className ='flex-1 py-10 border-t border-gray-200';
+
+    let divPrenomElement = document.createElement('h3');
+    divPrenomElement.className = 'font-medium text-gray-900';
+    divPrenomElement.textContent = `${prenom} ${nom}`;
+
+    let divTexte = document.createElement('div')
+    divTexte.className = 'prose prose-sm mt-4 max-w-none text-gray-500'
+
+    let contenuCommentaire = document.createElement('p');
+    contenuCommentaire.textContent = `${texte}`;
+
+    divTexte.appendChild(contenuCommentaire);
+    titreNomPrenom.appendChild(divPrenomElement);
+    titreNomPrenom.appendChild(divTexte)
+    nouveauCommentaire.appendChild(titreNomPrenom);
+    
+    ListeCommentaire.appendChild(nouveauCommentaire);
+ 
+  	document.querySelector('form').reset();
+    }
+   
+}
 
 
- }
